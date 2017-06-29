@@ -1,6 +1,6 @@
 module MenuIO
-    ( someFunc
+    ( menu
     ) where
 
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
+menu :: IO ()
+menu = putStrLn "someFunc"
