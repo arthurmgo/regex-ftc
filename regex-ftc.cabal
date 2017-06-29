@@ -2,12 +2,12 @@ name:                regex-ftc
 version:             0.1.0.0
 -- synopsis:
 -- description:
-homepage:            https://github.com/githubuser/regex-ftc#readme
+homepage:            https://github.com/arthurmgo/regex-ftc#readme
 license:             BSD3
 license-file:        LICENSE
-author:              Author name here
-maintainer:          example@example.com
-copyright:           2017 Author name here
+author:              Arthur Miranda Gomes
+maintainer:          example@gmail.com
+copyright:           2017 Arthur Miranda Gomes
 category:            Web
 build-type:          Simple
 extra-source-files:  README.md
@@ -38,4 +38,4 @@ test-suite regex-ftc-test
 
 source-repository head
   type:     git
-  location: https://github.com/githubuser/regex-ftc
+  location: https://github.com/arthurmgo/regex-ftc
