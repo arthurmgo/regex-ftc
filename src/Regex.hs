@@ -35,10 +35,10 @@ chars = map charToString
 str2regex :: String -> Regex
 str2regex = head . foldl foldFunction [] . chars
     where
-        foldFunction (x:ys) "*"   = Kleene x : ys
+        foldFunction (x:ys)   "*" = Kleene x : ys
         foldFunction (x:y:ys) "+" = Union y x : ys
         foldFunction (x:y:ys) "." = Concat y x : ys
-        foldFunction xs [a]       = Lit a : xs
+        foldFunction    xs    [a] = Lit a : xs
 
 
 instance Show Regex where
