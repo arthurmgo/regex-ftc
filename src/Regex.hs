@@ -9,15 +9,13 @@ data Regex = Lambda |
              Kleene Regex
              deriving (Eq)
 
-literals :: Regex -> String
-literals Lambda         = []
-literals (Lit a)        = [a]
-literals (Union r1 r2)  = literals r1 ++ literals r2
-literals (Concat r1 r2) = literals r1 ++ literals r2
-literals (Kleene r)     = literals r
 
 printRePol :: Regex -> String
-printRePol (Lit a)       = [a]
-printRePol (Union r1 r2) = printRePol r1 ++ printRePol r2 ++ "+"
+printRePol Lambda         = "@"
+printRePol (Lit a)        = [a]
+printRePol (Union r1 r2)  = printRePol r1 ++ printRePol r2 ++ "+"
 printRePol (Concat r1 r2) = printRePol r1 ++ printRePol r2 ++ "."
-printRePol (Kleene r) = printRePol r ++ "*"
+printRePol (Kleene r)     = printRePol r ++ "*"
+
+str2regex :: String -> Regex
+str2regex = undefined
