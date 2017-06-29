@@ -20,3 +20,4 @@ printRePol :: Regex -> String
 printRePol (Lit a)       = [a]
 printRePol (Union r1 r2) = printRePol r1 ++ printRePol r2 ++ "+"
 printRePol (Concat r1 r2) = printRePol r1 ++ printRePol r2 ++ "."
+printRePol (Kleene r) = printRePol r ++ "*"
