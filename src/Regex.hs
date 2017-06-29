@@ -1,5 +1,7 @@
 module Regex
-    (
+    (printRePol,
+    printRe,
+    str2regex
     ) where
 
 data Regex = Lambda |
