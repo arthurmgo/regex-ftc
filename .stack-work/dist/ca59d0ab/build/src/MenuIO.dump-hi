@@ -1,0 +1,162 @@
+
+==================== FINAL INTERFACE ====================
+2017-06-30 05:54:34.4130611 UTC
+
+interface regex-ftc-0.1.0.0-4o6NQxocRYX9a1nXhmykiN:MenuIO 8002
+  interface hash: 01afe853f90802b71bff2b531dad8dfa
+  ABI hash: 263fca8949bafe9702da097e750a8ab3
+  export-list hash: 292be648fd4b2cd6ea03209b19aab3d4
+  orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
+  flag hash: 5cce583a522582862a97501daeabe24f
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  MenuIO.menu
+module dependencies: Regex
+package dependencies: base-4.9.1.0* ghc-prim-0.5.0.0
+                      integer-gmp-1.0.0.1
+orphans: base-4.9.1.0:GHC.Base base-4.9.1.0:GHC.Float
+family instance modules: base-4.9.1.0:Control.Applicative
+                         base-4.9.1.0:Data.Either base-4.9.1.0:Data.Functor.Const
+                         base-4.9.1.0:Data.Monoid base-4.9.1.0:Data.Type.Equality
+                         base-4.9.1.0:GHC.Generics base-4.9.1.0:GHC.IO.Exception
+                         base-4.9.1.0:GHC.TypeLits
+import  -/  base-4.9.1.0:GHC.Base 4caea1123ecf4b46e27cbccd6d279377
+import  -/  base-4.9.1.0:GHC.List d11eb227c1c6fbfd89bb781d72eaea0d
+import  -/  base-4.9.1.0:Prelude 74b3e204395920329f6de9d97206abe9
+import  -/  base-4.9.1.0:System.IO 5daf3f384209c11d9566e3409af8ec5d
+import  -/  ghc-prim-0.5.0.0:GHC.Classes 16d48e012d23eaef9bca91ccdd572c02
+import  -/  ghc-prim-0.5.0.0:GHC.Types 89f8de4f08018c9177c98d979eae0e45
+import  -/  Regex 8f57695774f5b88adac0d72fd9787549
+  exports: f28275d9b8f7a005a9398a6b90722c2f
+8654c82744e96a93f989b806e8ddbdab
+  $trModule :: GHC.Types.Module
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.Module
+                   MenuIO.$trModule2
+                   MenuIO.$trModule1) -}
+90c3a481c90c265dd457527bc03272cd
+  $trModule1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "MenuIO"#) -}
+93022270a9024090ba025e98845a4779
+  $trModule2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS
+                   "regex-ftc-0.1.0.0-4o6NQxocRYX9a1nXhmykiN"#) -}
+3b5ca450bfc00b602120855dfc64795f
+  $wmenu ::
+    GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
+  {- Arity: 1, Strictness: <S,U>, Inline: [0],
+     Unfolding: (\ (w :: GHC.Prim.State# GHC.Prim.RealWorld)[OneShot] ->
+                 case GHC.IO.Handle.Internals.wantReadableHandle_1
+                        @ GHC.Base.String
+                        GHC.IO.Handle.Text.hGetLine4
+                        GHC.IO.Handle.FD.stdin
+                        GHC.IO.Handle.Text.hGetLine2
+                          `cast`
+                        (<GHC.IO.Handle.Types.Handle__>_R
+                         ->_R Sym (GHC.Types.N:IO[0] <GHC.Base.String>_R))
+                        w of ds1 { (#,#) ipv ipv1 ->
+                 let {
+                   ds :: [GHC.Types.Char]
+                   = GHC.List.$wunsafeTake @ GHC.Types.Char 2# ipv1
+                 } in
+                 case GHC.Base.eqString ds MenuIO.menu8 of wild {
+                   GHC.Types.False
+                   -> case GHC.Base.eqString ds MenuIO.menu7 of wild1 {
+                        GHC.Types.False
+                        -> case GHC.Base.eqString ds MenuIO.menu6 of wild2 {
+                             GHC.Types.False
+                             -> case GHC.Base.eqString ds MenuIO.menu5 of wild3 {
+                                  GHC.Types.False
+                                  -> case GHC.Base.eqString ds MenuIO.menu4 of wild4 {
+                                       GHC.Types.False
+                                       -> case GHC.Base.eqString ds MenuIO.menu3 of wild5 {
+                                            GHC.Types.False -> (# ipv, GHC.Tuple.() #)
+                                            GHC.Types.True
+                                            -> GHC.IO.Handle.Text.hPutStr2
+                                                 GHC.IO.Handle.FD.stdout
+                                                 MenuIO.menu2
+                                                 GHC.Types.True
+                                                 ipv }
+                                       GHC.Types.True
+                                       -> GHC.IO.Handle.Text.hPutStr2
+                                            GHC.IO.Handle.FD.stdout
+                                            MenuIO.menu2
+                                            GHC.Types.True
+                                            ipv }
+                                  GHC.Types.True
+                                  -> GHC.IO.Handle.Text.hPutStr2
+                                       GHC.IO.Handle.FD.stdout
+                                       MenuIO.menu2
+                                       GHC.Types.True
+                                       ipv }
+                             GHC.Types.True
+                             -> GHC.IO.Handle.Text.hPutStr2
+                                  GHC.IO.Handle.FD.stdout
+                                  MenuIO.menu2
+                                  GHC.Types.True
+                                  ipv }
+                        GHC.Types.True
+                        -> GHC.IO.Handle.Text.hPutStr2
+                             GHC.IO.Handle.FD.stdout
+                             MenuIO.menu2
+                             GHC.Types.True
+                             ipv }
+                   GHC.Types.True
+                   -> GHC.IO.Handle.Text.hPutStr2
+                        GHC.IO.Handle.FD.stdout
+                        MenuIO.menu2
+                        GHC.Types.True
+                        ipv } }) -}
+b7661c2723b3e8fc13e04e874030d886
+  type Tag = (GHC.Base.String, GHC.Base.String)
+5016c0516c72b3fed895a2f3a8755076
+  menu :: [MenuIO.Tag] -> GHC.Types.IO ()
+  {- Arity: 2, Strictness: <L,A><S,U>,
+     Unfolding: InlineRule (0, True, True)
+                MenuIO.menu1
+                  `cast`
+                (<[MenuIO.Tag]>_R ->_R Sym (GHC.Types.N:IO[0] <()>_R)) -}
+d9c375bfc906605f57f620a4fe578c02
+  menu1 ::
+    [MenuIO.Tag]
+    -> GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
+  {- Arity: 2, Strictness: <L,A><S,U>, Inline: INLINE[0],
+     Unfolding: InlineRule (2, True, True)
+                (\ (w :: [MenuIO.Tag])
+                   (w1 :: GHC.Prim.State# GHC.Prim.RealWorld)[OneShot] ->
+                 MenuIO.$wmenu w1) -}
+8db01f196f5deeb3c2521c38ec969ac4
+  menu2 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "FIM DO PROGRAMA"#) -}
+ad23090442d377e262e874415477fffe
+  menu3 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# ":s"#) -}
+351fe6ac3a311a509380008c31c031aa
+  menu4 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# ":q"#) -}
+6e7ef264f06a50729b7f74f7e54fed78
+  menu5 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# ":p"#) -}
+19d8fddeb2b79514539df0dffa98ee2b
+  menu6 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# ":o"#) -}
+dbf07c1d7a12cfc9e6eeb8a86a3b949c
+  menu7 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# ":l"#) -}
+cc81fb023b635821960cadadc5ee86e6
+  menu8 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# ":f"#) -}
+vectorised variables:
+vectorised tycons:
+vectorised reused tycons:
+parallel variables:
+parallel tycons:
+trusted: safe
+require own pkg trusted: False
+
