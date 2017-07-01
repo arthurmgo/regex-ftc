@@ -20,5 +20,5 @@ menu tag = do
     ":o"      -> putStrLn "FIM DO PROGRAMA"
     ":p"      -> putStrLn "FIM DO PROGRAMA"
     ":q"      -> putStrLn "FIM DO PROGRAMA"
-    ":s"      -> putStrLn "FIM DO PROGRAMA"
+    ":s"      -> putStrLn "FIM"
     _         -> return ()
