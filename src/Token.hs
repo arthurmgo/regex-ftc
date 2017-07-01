@@ -41,11 +41,3 @@ printToken TBar      =  "\\"
 
 token2str :: [Token] -> String
 token2str = concatMap printToken
-
-
-{-
-main :: IO ()
-main = do
-  a <- readFile "teste.txt"
-  let b = str2token a
-  mapM_ print b -}
