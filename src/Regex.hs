@@ -4,7 +4,7 @@ module Regex
     str2regex
     ) where
 
-import Token
+import           Token
 
 data Regex = Lambda |
              Lit Char |
