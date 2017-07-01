@@ -4,6 +4,8 @@ module Regex
     str2regex
     ) where
 
+import Token
+
 data Regex = Lambda |
              Lit Char |
              Union Regex Regex |
@@ -31,6 +33,7 @@ charToString c = [c]
 
 chars :: String -> [String]
 chars = map charToString
+
 
 str2regex :: String -> Regex
 str2regex = head . foldl foldFunction [] . chars

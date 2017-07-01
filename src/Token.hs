@@ -1,29 +1,51 @@
 module Token where
 
 data Token =  TChar Char
-            | Plus
-            | Lambda
-            | Enter
-            | Bar
+            | TPlus
+            | TMinus
+            | TTimes
+            | TDot
+            | TLambda
+            | TEnter
+            | TBar
               deriving (Show, Eq)
+
 
 str2token :: String -> [Token]
 str2token [] = []
 str2token (x:y:xs) = case x of
   '\\' -> case y of
-      '+' -> Plus   : str2token xs
-      'n' -> Enter  : str2token xs
-      'l' -> Lambda : str2token xs
-      _   -> Bar    : str2token (y:xs)
+      '+' -> TPlus   : str2token xs
+      '-' -> TMinus  : str2token xs
+      '*' -> TTimes  : str2token xs
+      '.' -> TDot    : str2token xs
+      'n' -> TEnter  : str2token xs
+      'l' -> TLambda : str2token xs
+      _   -> TBar    : str2token (y:xs)
   b -> TChar b : str2token (y:xs)
 str2token [x] = case x of
-  '\\' -> [Bar]
-  a   -> [TChar a]
+  '\\' -> [TBar]
+  a    -> [TChar a]
 
 
+printToken :: Token -> String
+printToken (TChar c) =  [c]
+printToken TPlus     =  "+"
+printToken TMinus    =  "-"
+printToken TTimes    =  "*"
+printToken TDot      =  "."
+printToken TLambda   =  "\\l"
+printToken TEnter    =  "\\n"
+printToken TBar      =  "\\"
 
+
+token2str :: [Token] -> String
+token2str = concatMap printToken
+
+
+{-
 main :: IO ()
 main = do
   a <- readFile "teste.txt"
   let b = str2token a
-  mapM_ print b
+  mapM_ print b -}
