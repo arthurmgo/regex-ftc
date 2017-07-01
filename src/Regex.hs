@@ -15,14 +15,16 @@ data Regex = Lambda |
 
 
 printRePol :: Regex -> String
-printRePol Lambda         = "@"
+printRePol Lambda         = "LAMBDA"
+printRePol (Lit  '\n')    = "ENTER"
 printRePol (Lit a)        = [a]
 printRePol (Union r1 r2)  = printRePol r1 ++ printRePol r2 ++ "+"
 printRePol (Concat r1 r2) = printRePol r1 ++ printRePol r2 ++ "."
 printRePol (Kleene r)     = printRePol r ++ "*"
 
 printRe :: Regex -> String
-printRe Lambda         = "@"
+printRe Lambda         = "LAMBDA"
+printRe (Lit  '\n')    = "ENTER"
 printRe (Lit a)        = [a]
 printRe (Union r1 r2)  = "(" ++ printRe r1 ++ "+" ++ printRe r2 ++ ")"
 printRe (Concat r1 r2) = "(" ++ printRe r1 ++ printRe r2 ++ ")"
