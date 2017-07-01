@@ -28,12 +28,6 @@ printRe (Union r1 r2)  = "(" ++ printRe r1 ++ "+" ++ printRe r2 ++ ")"
 printRe (Concat r1 r2) = "(" ++ printRe r1 ++ printRe r2 ++ ")"
 printRe (Kleene r)     = "(" ++ printRe r ++ ")*"
 
-charToString :: Char -> String
-charToString c = [c]
-
-chars :: String -> [String]
-chars = map charToString
-
 
 str2regex :: String -> Regex
 str2regex = head . foldl foldFunction [] . str2token
