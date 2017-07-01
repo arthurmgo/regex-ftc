@@ -1,5 +1,6 @@
 module MenuIO
-    ( menu
+    ( menu,
+      splitTag
     ) where
 
 import           Data.List.Split
@@ -23,7 +24,7 @@ menu tag = do
 
 
 splitTag :: String -> String -> (String, String)
-splitTag str s = (tag,expr)
+splitTag s str = (tag,expr)
   where
     spl  = splitOn s str
     tag  = head spl
