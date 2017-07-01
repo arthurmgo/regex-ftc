@@ -1,6 +1,7 @@
 module MenuIO
     ( menu,
-      splitTag
+      splitTag,
+      readTag
     ) where
 
 import           Data.List.Split
@@ -22,6 +23,13 @@ menu tag = do
     ":s" -> putStrLn "FIM"
     _    -> return ()
 
+readTag :: String -> Maybe Tag
+readTag str = case tag of
+  ([],_) -> Nothing
+  (_,[]) -> Nothing
+  (a,b)  -> Just (a,b)
+  where
+    tag = splitTag ": " str
 
 splitTag :: String -> String -> (String, String)
 splitTag s str = (tag,expr)
