@@ -23,6 +23,7 @@ menu tag = do
     ":s" -> putStrLn "FIM"
     _    -> return ()
 
+-- Tratamento de erro de string sem nome, e tag sem conteudo
 readTag :: String -> Maybe Tag
 readTag str = case tag of
   ([],_) -> Nothing
