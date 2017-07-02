@@ -35,12 +35,12 @@ str2regex :: String -> Either Regex String
 str2regex str =
   if null $ tail $ resp str then
      Left $ head $ resp str else
-     Right "teste"
+     Right "[ERRO]"
      where
         resp = foldl foldFunction [] . str2token
-        foldFunction (x:ys)   (TChar '*') = Kleene x   : ys
-        foldFunction (x:y:ys) (TChar '+') = Union y x  : ys
-        foldFunction (x:y:ys) (TChar '.') = Concat y x : ys
+        foldFunction (x:xs)   (TChar '*') = Kleene x   : xs
+        foldFunction (x:y:xs) (TChar '+') = Union y x  : xs
+        foldFunction (x:y:xs) (TChar '.') = Concat y x : xs
         foldFunction    xs    TPlus       = Lit '+'    : xs
         foldFunction    xs    TMinus      = Lit '-'    : xs
         foldFunction    xs    TTimes      = Lit '*'    : xs
