@@ -8,6 +8,7 @@ data Token =  TChar Char
             | TLambda
             | TEnter
             | TBar
+            | TERROR  -- Tratar caracteres invalidos
               deriving (Show, Eq)
 
 
