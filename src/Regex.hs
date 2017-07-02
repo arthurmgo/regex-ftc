@@ -31,9 +31,13 @@ printRe (Concat r1 r2) = "(" ++ printRe r1 ++ printRe r2 ++ ")"
 printRe (Kleene r)     = "(" ++ printRe r ++ ")*"
 
 
-str2regex :: String -> Regex
-str2regex = head . foldl foldFunction [] . str2token
-    where
+str2regex :: String -> Either Regex String
+str2regex str =
+  if null $ tail $ resp str then
+     Left $ head $ resp str else
+     Right "teste"
+     where
+        resp = foldl foldFunction [] . str2token
         foldFunction (x:ys)   (TChar '*') = Kleene x   : ys
         foldFunction (x:y:ys) (TChar '+') = Union y x  : ys
         foldFunction (x:y:ys) (TChar '.') = Concat y x : ys
