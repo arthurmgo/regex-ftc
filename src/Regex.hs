@@ -36,7 +36,7 @@ str2regex :: String -> Either Regex String
 str2regex str =
   if null $ tail $ resp str then
      Left $ head $ resp str else
-     Right "[ERRO]"
+     Right "[ERROR] Não constitui uma expressão regular valida"
      where
         resp = foldl foldFunction [] . str2token
         foldFunction (x:xs)   (TChar '*') = Kleene x   : xs

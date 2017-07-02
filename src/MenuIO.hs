@@ -7,7 +7,7 @@ module MenuIO
 import           Data.List.Split
 import           Regex
 
-type Tag = (String, String)
+type Tag = (String, Regex)
 
 menu :: [Tag] -> IO ()
 menu tag = do
@@ -24,13 +24,18 @@ menu tag = do
     _    -> return ()
 
 -- Tratamento de erro de string sem nome, e tag sem conteudo
-readTag :: String -> Maybe Tag
+readTag :: String -> Either Tag String
 readTag str = case tag of
-  ([],_) -> Nothing
-  (_,[]) -> Nothing
-  (a,b)  -> Just (a,b)
+  ([],_) -> Right "[ERROR] Tag informada não possui nome"
+  (_,[]) -> Right "[ERROR] Tag informada não possui conteudo"
+  (a,b)  -> case reg of
+    Right s -> Right s
+    Left ex -> Left (a, ex)
   where
     tag = splitTag ": " str
+    reg = str2regex $ snd tag
+
+
 
 splitTag :: String -> String -> (String, String)
 splitTag s str = (tag,expr)
