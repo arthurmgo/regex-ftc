@@ -21,6 +21,7 @@ str2token (x:y:xs) = case x of
       '.' -> TDot    : str2token xs
       'n' -> TEnter  : str2token xs
       'l' -> TLambda : str2token xs
+      '\\'-> TBar    : str2token xs
       _   -> TBar    : str2token (y:xs)
   b -> TChar b : str2token (y:xs)
 str2token [x] = case x of

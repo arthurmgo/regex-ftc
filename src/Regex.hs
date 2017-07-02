@@ -18,6 +18,10 @@ data Regex =  Lambda
 printRePol :: Regex -> String
 printRePol Lambda         = "\\l"
 printRePol (Lit '\n')     = "\\n"
+printRePol (Lit '+')      = "\\+"
+printRePol (Lit '-')      = "\\-"
+printRePol (Lit '.')      = "\\."
+printRePol (Lit '*')      = "\\*"
 printRePol (Lit a)        = [a]
 printRePol (Union r1 r2)  = printRePol r1 ++ printRePol r2 ++ "+"
 printRePol (Concat r1 r2) = printRePol r1 ++ printRePol r2 ++ "."
@@ -27,6 +31,10 @@ printRePol (Kleene r)     = printRePol r ++ "*"
 printRe :: Regex -> String
 printRe Lambda         = "\\l"
 printRe (Lit '\n')     = "\\n"
+printRe (Lit '+')      = "\\+"
+printRe (Lit '-')      = "\\-"
+printRe (Lit '.')      = "\\."
+printRe (Lit '*')      = "\\*"
 printRe (Lit a)        = [a]
 printRe (Union r1 r2)  = "(" ++ printRe r1 ++ "+" ++ printRe r2 ++ ")"
 printRe (Concat r1 r2) = "(" ++ printRe r1 ++ printRe r2 ++ ")"
