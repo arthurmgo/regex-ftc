@@ -54,9 +54,9 @@ splitTag s str = (tag,expr)
     expr = drop len str
 
 tag2str :: [Tag] -> String
-tag2str [] = []
+tag2str []         = []
 tag2str ((s,t):ts) = s ++ ": " ++ printRePol t ++ "\n" ++ tag2str ts
 
 saveTag :: String -> [Tag] -> IO ()
-saveTag file [] = return ()
+saveTag file []   = putStrLn "[WARNING] Não existem tags"
 saveTag file tags = writeFile file $ tag2str tags
