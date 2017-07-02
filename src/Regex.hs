@@ -7,11 +7,11 @@ module Regex
 
 import           Token
 
-data Regex = Lambda |
-             Lit Char |
-             Union Regex Regex |
-             Concat Regex Regex |
-             Kleene Regex
+data Regex =  Lambda
+            | Lit Char
+            | Union Regex Regex
+            | Concat Regex Regex
+            | Kleene Regex
              deriving (Eq)
 
 
@@ -22,6 +22,7 @@ printRePol (Lit a)        = [a]
 printRePol (Union r1 r2)  = printRePol r1 ++ printRePol r2 ++ "+"
 printRePol (Concat r1 r2) = printRePol r1 ++ printRePol r2 ++ "."
 printRePol (Kleene r)     = printRePol r ++ "*"
+
 
 printRe :: Regex -> String
 printRe Lambda         = "\\l"
@@ -36,7 +37,7 @@ str2regex :: String -> Either Regex String
 str2regex str =
   if null $ tail $ resp str then
      Left $ head $ resp str else
-     Right "[ERROR] Não constitui uma expressão regular valida"
+     Right "[ERROR] Nao constitui uma expressão regular valida"
      where
         resp = foldl foldFunction [] . str2token
         foldFunction (x:xs)   (TChar '*') = Kleene x   : xs

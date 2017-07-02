@@ -9,8 +9,9 @@ import           Regex
 
 type Tag = (String, Regex)
 
+--Menu de Interacao com o usuario
 menu :: [Tag] -> IO ()
-menu tag = do
+menu tags = do
   str <- getLine
   let op    = take 2 str
       file  = drop 3 str
@@ -20,8 +21,16 @@ menu tag = do
     ":o" -> putStrLn "FIM DO PROGRAMA"
     ":p" -> putStrLn "FIM DO PROGRAMA"
     ":q" -> putStrLn "FIM DO PROGRAMA"
-    ":s" -> putStrLn "FIM"
-    _    -> return ()
+    ":s" -> saveTag file tags >> menu tags
+    _    -> do
+      let tag = readTag str
+      case tag of
+        Right s -> do
+          putStrLn s
+          menu tags
+        Left t -> do
+          putStrLn "[INFO] Nova definicao de tag carregada"
+          menu (tags ++ [t])
 
 -- Tratamento de erro de string sem nome, e tag sem conteudo
 readTag :: String -> Either Tag String
@@ -35,8 +44,7 @@ readTag str = case tag of
     tag = splitTag ": " str
     reg = str2regex $ snd tag
 
-
-
+-- Separa uma tag em nome e conteudo de acordo com a posicao de ": "
 splitTag :: String -> String -> (String, String)
 splitTag s str = (tag,expr)
   where
@@ -44,3 +52,11 @@ splitTag s str = (tag,expr)
     tag  = head spl
     len  = length $ s ++ tag
     expr = drop len str
+
+tag2str :: [Tag] -> String
+tag2str [] = []
+tag2str ((s,t):ts) = s ++ ": " ++ printRePol t ++ "\n" ++ tag2str ts
+
+saveTag :: String -> [Tag] -> IO ()
+saveTag file [] = return ()
+saveTag file tags = writeFile file $ tag2str tags
