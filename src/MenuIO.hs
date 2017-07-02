@@ -20,7 +20,7 @@ menu tags = do
     ":f" -> putStrLn "FIM DO PROGRAMA"
     ":o" -> putStrLn "FIM DO PROGRAMA"
     ":p" -> putStrLn "FIM DO PROGRAMA"
-    ":q" -> putStrLn "FIM DO PROGRAMA"
+    ":q" -> putStrLn "[INFO] Fim do programa"
     ":s" -> saveTag file tags >> menu tags
     _    -> do
       let tag = readTag str
