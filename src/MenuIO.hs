@@ -16,10 +16,10 @@ menu tags = do
   let op    = take 2 str
       file  = drop 3 str
   case op of
-    ":l" -> putStrLn "FIM DO PROGRAMA"
-    ":f" -> putStrLn "FIM DO PROGRAMA"
-    ":o" -> putStrLn "FIM DO PROGRAMA"
-    ":p" -> putStrLn "FIM DO PROGRAMA"
+    ":l" -> putStrLn ":l Falta Implementar" >> menu tags
+    ":f" -> putStrLn ":f Falta Implementar" >> menu tags
+    ":o" -> putStrLn ":o Falta Implementar" >> menu tags
+    ":p" -> putStrLn ":p Falta Implementar" >> menu tags
     ":q" -> putStrLn "[INFO] Fim do programa"
     ":s" -> saveTag file tags >> menu tags
     _    -> do
