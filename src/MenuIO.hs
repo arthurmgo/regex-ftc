@@ -59,4 +59,6 @@ tag2str ((s,t):ts) = s ++ ": " ++ printRePol t ++ "\n" ++ tag2str ts
 
 saveTag :: String -> [Tag] -> IO ()
 saveTag file []   = putStrLn "[WARNING] Não existem tags"
-saveTag file tags = writeFile file $ tag2str tags
+saveTag file tags = do
+  writeFile file $ tag2str tags
+  putStrLn "[INFO] Arquivo salvo com sucesso"
