@@ -1,7 +1,8 @@
 module Regex
-    (printRePol,
-    printRe,
-    str2regex
+    (Regex,
+     printRePol,
+     printRe,
+     str2regex
     ) where
 
 import           Token
