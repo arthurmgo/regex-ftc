@@ -20,8 +20,8 @@ menu tags = do
     ":f" -> putStrLn ":f Falta Implementar" >> menu tags
     ":o" -> putStrLn ":o Falta Implementar" >> menu tags
     ":p" -> putStrLn ":p Falta Implementar" >> menu tags
-    ":q" -> putStrLn "[INFO] Fim do programa"
     ":s" -> saveTag file tags               >> menu tags
+    ":q" -> putStrLn "[INFO] Fim do programa"
     _    -> do
       let tag = readTag str
       case tag of
