@@ -8,7 +8,7 @@ data Token =  TChar Char
             | TLambda
             | TEnter
             | TBar
-            | TERROR  -- Tratar caracteres invalidos
+            | TError  -- Tratar caracteres invalidos
               deriving (Show, Eq)
 
 
@@ -23,10 +23,10 @@ str2token (x:y:xs) = case x of
       'n' -> TEnter  : str2token xs
       'l' -> TLambda : str2token xs
       '\\'-> TBar    : str2token xs
-      _   -> TBar    : str2token (y:xs)
+      _   -> TError  : str2token xs
   b -> TChar b : str2token (y:xs)
 str2token [x] = case x of
-  '\\' -> [TBar]
+  '\\' -> [TError]
   a    -> [TChar a]
 
 

@@ -22,6 +22,7 @@ printRePol (Lit '+')      = "\\+"
 printRePol (Lit '-')      = "\\-"
 printRePol (Lit '.')      = "\\."
 printRePol (Lit '*')      = "\\*"
+printRePol (Lit '\\')     = "\\\\"
 printRePol (Lit a)        = [a]
 printRePol (Union r1 r2)  = printRePol r1 ++ printRePol r2 ++ "+"
 printRePol (Concat r1 r2) = printRePol r1 ++ printRePol r2 ++ "."
@@ -35,6 +36,7 @@ printRe (Lit '+')      = "\\+"
 printRe (Lit '-')      = "\\-"
 printRe (Lit '.')      = "\\."
 printRe (Lit '*')      = "\\*"
+printRe (Lit '\\')     = "\\\\"
 printRe (Lit a)        = [a]
 printRe (Union r1 r2)  = "(" ++ printRe r1 ++ "+" ++ printRe r2 ++ ")"
 printRe (Concat r1 r2) = "(" ++ printRe r1 ++ printRe r2 ++ ")"
@@ -43,7 +45,7 @@ printRe (Kleene r)     = "(" ++ printRe r ++ ")*"
 
 str2regex :: String -> Either Regex String
 str2regex str =
-  if null $ tail $ resp str then
+  if (not (elem TError (str2token str))) && (null $ tail $ resp str) then
      Left $ head $ resp str else
      Right "[ERROR] Nao constitui uma expressão regular valida"
      where
