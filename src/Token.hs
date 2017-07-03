@@ -1,5 +1,6 @@
 module Token where
 
+-- Tipo de dado que define uma representação simbolica para caracteres
 data Token =  TChar Char
             | TPlus
             | TMinus
@@ -8,10 +9,10 @@ data Token =  TChar Char
             | TLambda
             | TEnter
             | TBar
-            | TError  -- Tratar caracteres invalidos
+            | TError  -- Tratar caracteres invalidos - exemplo: \a
               deriving (Show, Eq)
 
-
+-- Mapeia uma string em uma lista de Simbolos equivalentes
 str2token :: String -> [Token]
 str2token [] = []
 str2token (x:y:xs) = case x of
@@ -29,7 +30,7 @@ str2token [x] = case x of
   '\\' -> [TError]
   a    -> [TChar a]
 
-
+-- Representação de um Simbolo em uma String
 printToken :: Token -> String
 printToken (TChar c) =  [c]
 printToken TPlus     =  "+"
@@ -40,6 +41,6 @@ printToken TLambda   =  "\\l"
 printToken TEnter    =  "\\n"
 printToken TBar      =  "\\\\"
 
-
+-- Converte uma lista de Simbolos em uma String
 token2str :: [Token] -> String
 token2str = concatMap printToken

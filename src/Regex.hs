@@ -7,6 +7,7 @@ module Regex
 
 import           Token
 
+-- Tipo de dado para representar uma expressão regular
 data Regex =  Lambda
             | Lit Char
             | Union Regex Regex
@@ -14,7 +15,7 @@ data Regex =  Lambda
             | Kleene Regex
              deriving (Eq)
 
-
+-- Conversão de uma expressão regular para uma string equivalente em RPN
 printRePol :: Regex -> String
 printRePol Lambda         = "\\l"
 printRePol (Lit '\n')     = "\\n"
@@ -28,7 +29,7 @@ printRePol (Union r1 r2)  = printRePol r1 ++ printRePol r2 ++ "+"
 printRePol (Concat r1 r2) = printRePol r1 ++ printRePol r2 ++ "."
 printRePol (Kleene r)     = printRePol r ++ "*"
 
-
+-- Conversão de uma expressão regular para uma string equivalente
 printRe :: Regex -> String
 printRe Lambda         = "\\l"
 printRe (Lit '\n')     = "\\n"
@@ -45,14 +46,16 @@ printRe (Kleene r)     = "(" ++ printRe r ++ ")*"
 
 str2regex :: String -> Either Regex String
 str2regex str
-    | TError `elem` str2token str =
+    | TError `elem` str2token str =  -- Se a string possui um erro sintatico
       Right "[ERROR] Formato irregular de String"
-    | null (tail $ solveRPN str) =
+    | null (tail $ solveRPN str) = -- Se a string foi completamente avaliada
       Left $ head $ solveRPN str
-    | otherwise =
+    | otherwise =       -- Se não foi possivel avaliar a string por completo
       Right "[ERROR] Nao constitui uma expressao regular valida"
      where
+        -- transforma uma string em RPN em uma Regex
         solveRPN = foldl foldFunction [] . str2token
+        -- Operação realizada de acordo com caractere lido
         foldFunction (x:xs)   (TChar '*') = Kleene x   : xs
         foldFunction (x:y:xs) (TChar '+') = Union y x  : xs
         foldFunction (x:y:xs) (TChar '.') = Concat y x : xs
