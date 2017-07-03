@@ -1,11 +1,14 @@
 module MenuIO
     ( menu,
       splitTag,
-      readTag
+      readTag,
+      readTagFile
     ) where
 
 import           Data.List.Split
 import           Regex
+import           System.Directory
+import           Data.Either
 
 type Tag = (String, Regex)
 
@@ -16,7 +19,7 @@ menu tags = do
   let op    = take 2 str
       file  = drop 3 str
   case op of
-    ":l" -> putStrLn ":l Falta Implementar" >> menu tags
+    ":l" -> readTagFile file               >>= menu
     ":f" -> putStrLn ":f Falta Implementar" >> menu tags
     ":o" -> putStrLn ":o Falta Implementar" >> menu tags
     ":p" -> putStrLn ":p Falta Implementar" >> menu tags
@@ -43,6 +46,22 @@ readTag str = case tag of
   where
     tag = splitTag ": " str
     reg = str2regex $ snd tag
+
+readTagFile :: FilePath -> IO [Tag]
+readTagFile file = do
+  exist <- doesFileExist file
+  if exist
+    then do
+      str <- readFile file
+      let tags = lefts $ map readTag $ lines str
+          len1 = length $ lines str
+          len2 = length tags
+      putStrLn ("[INFO] Leitura de arquivo concluida. " ++ show (len1 - len2) ++ " tags não reconhecidas")
+      return tags
+    else do
+      putStrLn "[ERROR] Arquivo não encontrado"
+      return []
+
 
 -- Separa uma tag em nome e conteudo de acordo com a posicao de ": "
 splitTag :: String -> String -> (String, String)
