@@ -38,7 +38,7 @@ printToken TTimes    =  "*"
 printToken TDot      =  "."
 printToken TLambda   =  "\\l"
 printToken TEnter    =  "\\n"
-printToken TBar      =  "\\"
+printToken TBar      =  "\\\\"
 
 
 token2str :: [Token] -> String
