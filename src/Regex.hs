@@ -44,12 +44,15 @@ printRe (Kleene r)     = "(" ++ printRe r ++ ")*"
 
 
 str2regex :: String -> Either Regex String
-str2regex str =
-  if (not (elem TError (str2token str))) && (null $ tail $ resp str) then
-     Left $ head $ resp str else
-     Right "[ERROR] Nao constitui uma expressão regular valida"
+str2regex str
+    | TError `elem` str2token str =
+      Right "[ERROR] Formato irregular de String"
+    | null (tail $ solveRPN str) =
+      Left $ head $ solveRPN str
+    | otherwise =
+      Right "[ERROR] Nao constitui uma expressao regular valida"
      where
-        resp = foldl foldFunction [] . str2token
+        solveRPN = foldl foldFunction [] . str2token
         foldFunction (x:xs)   (TChar '*') = Kleene x   : xs
         foldFunction (x:y:xs) (TChar '+') = Union y x  : xs
         foldFunction (x:y:xs) (TChar '.') = Concat y x : xs
