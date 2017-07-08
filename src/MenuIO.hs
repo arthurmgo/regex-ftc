@@ -1,5 +1,3 @@
--- Arthur Miranda Gomes - 14.1.8338
--- Pedro Henrique Mendes Batista  - 14.1.8403
 module MenuIO
     ( menu,
       splitTag,
@@ -49,16 +47,17 @@ readTag str = case tag of
     tag = splitTag ": " str
     reg = str2regex $ snd tag
 
--- Leitura de um arquivo que contem tags
+-- Leitura de um arquivo que co
 readTagFile :: FilePath -> IO [Tag]
+readTagFile [] = putStrLn "[ERROR] Nome de Arquivo Invalido" >> return []
 readTagFile file = do
-  exist <- doesFileExist file  -- Verifica se o arquivo existe
+  exist <- doesFileExist file
   if exist
     then do
-      str <- readFile file     -- Leitura dos dados do arquivo
+      str <- readFile file
       let tags = lefts $ map readTag $ lines str
-          len1 = length $ lines str -- Numero de tags lidas
-          len2 = length tags        -- Numero de tags corretas
+          len1 = length $ lines str
+          len2 = length tags
       putStrLn ("[INFO] Leitura de arquivo concluida. " ++ show (len1 - len2) ++ " tags não reconhecidas")
       return tags
     else do
@@ -75,14 +74,13 @@ splitTag s str = (tag,expr)
     len  = length $ s ++ tag
     expr = drop len str
 
--- Conversão de uma lista de tags em uma string, cada tag é separada por \n
 tag2str :: [Tag] -> String
 tag2str []         = []
 tag2str ((s,t):ts) = s ++ ": " ++ printRePol t ++ "\n" ++ tag2str ts
 
--- Salva uma lista de tags no arquivo especificado
-saveTag :: String -> [Tag] -> IO ()
+saveTag :: FilePath -> [Tag] -> IO ()
 saveTag file []   = putStrLn "[WARNING] Não existem tags"
+saveTag [] _      = putStrLn "[ERROR] Nome de arquivo invalido"
 saveTag file tags = do
   writeFile file $ tag2str tags
   putStrLn "[INFO] Arquivo salvo com sucesso"
