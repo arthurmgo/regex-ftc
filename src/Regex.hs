@@ -1,3 +1,5 @@
+-- Arthur Miranda Gomes - 14.1.8338
+-- Pedro Henrique Mendes Batista  - 14.1.8403
 module Regex
     (Regex,
      printRePol,
@@ -43,7 +45,7 @@ printRe (Union r1 r2)  = "(" ++ printRe r1 ++ "+" ++ printRe r2 ++ ")"
 printRe (Concat r1 r2) = "(" ++ printRe r1 ++ printRe r2 ++ ")"
 printRe (Kleene r)     = "(" ++ printRe r ++ ")*"
 
-
+-- Conversão de uma strinf em RPN em uma Expressão regular, caso exista erros retorna mensagem
 str2regex :: String -> Either Regex String
 str2regex str
     | TError `elem` str2token str =  -- Se a string possui um erro sintatico
