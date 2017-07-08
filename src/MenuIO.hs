@@ -1,3 +1,5 @@
+-- Arthur Miranda Gomes - 14.1.8338
+-- Pedro Henrique Mendes Batista  - 14.1.8403
 module MenuIO
     ( menu,
       splitTag,
