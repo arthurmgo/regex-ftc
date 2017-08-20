@@ -49,7 +49,7 @@ readTag str = case tag of
     tag = splitTag ": " str
     reg = str2regex $ snd tag
 
--- Leitura de um arquivo que co
+-- Leitura de um arquivo que contem Tags
 readTagFile :: FilePath -> IO [Tag]
 readTagFile [] = putStrLn "[ERROR] Nome de Arquivo Invalido" >> return []
 readTagFile file = do
@@ -80,6 +80,8 @@ tag2str :: [Tag] -> String
 tag2str []         = []
 tag2str ((s,t):ts) = s ++ ": " ++ printRePol t ++ "\n" ++ tag2str ts
 
+
+--Salva tag em um arquivo
 saveTag :: FilePath -> [Tag] -> IO ()
 saveTag file []   = putStrLn "[WARNING] Não existem tags"
 saveTag [] _      = putStrLn "[ERROR] Nome de arquivo invalido"
