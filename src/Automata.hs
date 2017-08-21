@@ -43,7 +43,6 @@ closure (NFA states moves start term)
                      Emove y s <- flatten moves,
                      y == x]
 
-
 printNfa :: (Show a) => Nfa a -> String
 printNfa (NFA states moves start finish)
       = "States:\t" ++ showStates (flatten states) ++ "\n" ++
