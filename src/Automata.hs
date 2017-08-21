@@ -1,6 +1,4 @@
-module NfaTypes
-    (
-    ) where
+module Automata where
 
 import           Sets
 
@@ -44,3 +42,18 @@ closure (NFA states moves start term)
               = [s | x <- flatten stateset,
                      Emove y s <- flatten moves,
                      y == x]
+
+
+printNfa :: (Show a) => Nfa a -> String
+printNfa (NFA states moves start finish)
+      = "States:\t" ++ showStates (flatten states) ++ "\n" ++
+        "Moves:\n" ++ concatMap printMove (flatten moves) ++ "\n" ++
+        "Start:\t" ++ show start ++ "\n" ++
+        "Finish:\t" ++ showStates (flatten finish) ++ "\n"
+
+showStates :: (Show a) => [a] -> String
+showStates = concatMap ((++ " ") . show)
+
+printMove :: (Show a) => Move a -> String
+printMove (Move s1 c s2) = "\t" ++ show s1 ++ "----(" ++ [c] ++ ")---->" ++ show s2 ++ "\n"
+printMove (Emove s1 s2)  = "\t" ++ show s1 ++ "----(@)---->" ++ show s2 ++ "\n"

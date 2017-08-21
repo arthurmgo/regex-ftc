@@ -1,25 +1,30 @@
-module BuildNfa
-    (
-    ) where
+module BuildNfa where
 
-import Regex
-import Automata
+import           Automata
+import           Regex
+import           Sets
 
-build :: Reg -> Nfa Int
-build (Lit c)
-  = NFA (makeSet [0 .. 1])
-        (sing (Move 0 c 1))
-        0
-        (sing 1)
-build (Union r1 r2) = mOr (build r1) (build r2)
+
+build :: Regex -> Nfa Int
+build Lambda = NFA
+          (makeSet [0 .. 1])
+          (sing (Emove 0 1))
+           0
+          (sing 1)
+build (Lit c) = NFA
+          (makeSet [0 .. 1])
+          (sing (Move 0 c 1))
+           0
+          (sing 1)
+build (Union  r1 r2) = mOr   (build r1) (build r2)
 build (Concat r1 r2) = mThen (build r1) (build r2)
-build (Kleene r) = mStar (build r)
+build (Kleene r)     = mStar (build r)
 
 
 mOr :: Nfa Int -> Nfa Int -> Nfa Int
 mOr (NFA states1 moves1 start1 finish1) (NFA states2 moves2 start2 finish2)
-  = NFA (states1' 'union' states2' 'union' newstates)
-        (moves1' 'union' moves2' 'union' newmoves)
+  = NFA (states1' `union` states2' `union` newstates)
+        (moves1' `union` moves2' `union` newmoves)
          0
         (sing (m1+m2+1))
    where
@@ -37,15 +42,13 @@ mOr (NFA states1 moves1 start1 finish1) (NFA states2 moves2 start2 finish2)
 mThen :: Nfa Int -> Nfa Int -> Nfa Int
 mThen (NFA states1 moves1 start1 finish1) (NFA states2 moves2 start2 finish2)
   = NFA (states1 `union` states2') (moves1 `union` moves2')
-     	start1
-     	finish2'
-
-     	where
-
-     	states2' = mapSet (renumber k) states2
-     	moves2'  = mapSet (renumberMove k) moves2
-     	finish2' = mapSet (renumber k) finish2
-     	k = card states1 - 1
+      start1
+      finish2'
+        where
+          states2' = mapSet (renumber k) states2
+          moves2'  = mapSet (renumberMove k) moves2
+          finish2' = mapSet (renumber k) finish2
+          k = card states1 - 1
 
 mStar :: Nfa Int -> Nfa Int
 mStar (NFA states moves start finish)
