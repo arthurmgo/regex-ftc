@@ -16,7 +16,6 @@ makeSet = SetI . remDups . sort
       | x < y = x : remDups (y:xs)
       | otherwise = remDups (y:xs)
 
-
 card :: Set a -> Int
 card (SetI xs)     = length xs
 
@@ -24,13 +23,20 @@ eqSet :: Eq a => Set a -> Set a -> Bool
 eqSet (SetI xs) (SetI ys) = xs == ys
 
 showSet :: Show a => Set a -> String
-showSet (SetI xs) = concatMap ((++ "\n") . show) xs
+showSet (SetI xs) = "{" ++ f xs ++ "}"
+  where
+    f []     = ""
+    f [y]    = show y
+    f (y:ys) = show y ++ ", " ++ f ys
 
 flatten :: Set a -> [a]
 flatten (SetI xs) = xs
 
 empty :: Set aempty
-empty = SetI []
+empty  = SetI []
+
+isEmpty :: (Eq a) => Set a -> Bool
+isEmpty = (== empty)
 
 sing :: a -> Set a
 sing x = SetI [x]
@@ -42,9 +48,20 @@ uni :: Ord a => [a] -> [a] -> [a]
 uni [] ys = ys
 uni xs [] = xs
 uni (x:xs) (y:ys)
-          | x<y = x : uni xs (y:ys)
-          | x==y = x : uni xs ys
+          | x<y       = x : uni xs (y:ys)
+          | x==y      = x : uni xs ys
           | otherwise = y : uni (x:xs) ys
+
+inter    :: Ord a => Set a -> Set a -> Set a
+inter (SetI xs) (SetI ys) = SetI (int xs ys)
+
+int    :: Ord a => [a] -> [a] -> [a]
+int [] ys = []
+int xs [] = []
+int (x:xs) (y:ys)
+         | x<y        = int xs (y:ys)
+         | x==y       = x : int xs ys
+         | otherwise  = int (x:xs) ys
 
 setlimit :: Eq a => (Set a -> Set a) -> Set a -> Set a
 setlimit f s

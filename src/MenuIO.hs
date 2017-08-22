@@ -7,12 +7,18 @@ module MenuIO
       readTagFile
     ) where
 
-import           Data.List.Split
-import           Regex
-import           System.Directory
+import           Automata
+import           BuildNfa
 import           Data.Either
+import           Data.List.Split
+import           Data.Maybe
+import           Regex
+import           Sets
+import           System.Directory
 
-type Tag = (String, Regex)
+type TagName =  String
+type Tag     = (TagName, Regex)
+type TagNfa  = (TagName, Nfa Int)
 
 --Menu de Interacao com o usuario
 menu :: [Tag] -> IO ()
@@ -68,7 +74,7 @@ readTagFile file = do
 
 
 -- Separa uma tag em nome e conteudo de acordo com a posicao de ": "
-splitTag :: String -> String -> (String, String)
+splitTag :: String -> String -> (TagName, String)
 splitTag s str = (tag,expr)
   where
     spl  = splitOn s str
@@ -88,3 +94,55 @@ saveTag [] _      = putStrLn "[ERROR] Nome de arquivo invalido"
 saveTag file tags = do
   writeFile file $ tag2str tags
   putStrLn "[INFO] Arquivo salvo com sucesso"
+
+
+nextString :: String -> String -> String
+nextString str = snd . splitAt (length str)
+
+convertTag :: Tag -> TagNfa
+convertTag (s,r) = (s, build r)
+
+convertTags :: [Tag] -> [TagNfa]
+convertTags = map convertTag
+
+findMax :: [Maybe (TagName, String)] -> Maybe (TagName, String)
+findMax tag = maxTag (head tag) (tail tag)
+    where
+      maxTag x [] = x
+      maxTag x (y:ys) = if length x >= length y
+        then maxTag x ys
+        else maxTag y ys
+
+
+apply ::  String -> TagNfa -> Maybe (TagName, String)
+apply str (name,mach)  = if isNothing resp
+  then Nothing
+  else Just (name, fst $ fromJust resp)
+    where
+      resp = lastMatch str mach
+
+applyList :: String -> [TagNfa] ->  Maybe (TagName, String)
+applyList str  = findMax . map (apply str)
+
+func :: [TagNfa] -> String -> Maybe [TagName]
+func tags str@(x:xs)
+    | isNothing list           = Nothing
+    | isNothing (next nextstr) = Nothing
+    | otherwise                = Just (name : fromJust (next nextstr))
+    where next [] = Just []
+          next s  = func tags s
+          list    = applyList str tags
+          name    = fst $ fromJust list
+          patt    = snd $ fromJust list
+          nextstr = if null patt
+            then [x]
+            else nextString patt str
+
+mOrTag :: TagNfa -> TagNfa -> (Nfa Int,[(TagName, Set Int)])
+mOrTag t1 t2 = (machor, (name1, finishstates mach1):[(name2,finishstates mach2)])
+    where
+      name1  = fst t1
+      name2  = fst t2
+      mach1  = snd t1
+      mach2  = snd t2
+      machor = mOr mach1 mach2
