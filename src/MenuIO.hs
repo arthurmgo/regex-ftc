@@ -128,6 +128,15 @@ apply x y = if foldl' (==) True (map isNothing resp)
             (padrao, estado) = lastMatch nfa str
             nextstr = nextString padrao str -}
 
+divideString :: [Tag] -> String -> IO()
+divideString t s = do
+  let tagnfa = convertTags t
+      (automato, mapa) = makeNfa tagnfa
+      
+
+
+
+
 f :: Nfa Int -> String ->  [Maybe (Set Int)]
 f nfa []  =  []
 f nfa str = if padrao == ""
