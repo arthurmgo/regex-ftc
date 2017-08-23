@@ -64,6 +64,33 @@ mStar (NFA states moves start finish)
           newmoves  = makeSet [ Emove 0 1 , Emove m 1 , Emove 0 (m+1) , Emove m (m+1) ]
 
 
+
+mJoin :: [Nfa Int] -> (Nfa Int,[Set Int])
+mJoin mc
+   = (NFA (foldl union empty newstates `union` makeSet [0])
+         (foldl union empty newmoves `union` emoves)
+          0
+         (foldl union empty newfinish), newfinish)
+   where
+     -- Leitura de dados
+     starts1   = map startstate mc
+     moves1    = map moves mc
+     states1   = map states mc
+     finish1   = map finishstates mc
+     -- Numero de estados de cada automato
+     m1        = map card states1
+     newm1     = scanl1 (+) (init m1)
+     transf    = map (+1) (0:newm1)
+     -- Estados reajustados
+     newstates = zipWith (mapSet . renumber) transf states1
+     newmoves  = zipWith (mapSet . renumberMove) transf moves1
+     newfinish = zipWith (mapSet . renumber) transf finish1
+     newstarts = zipWith (+) transf starts1
+     --
+     emoves = makeSet [Emove 0 s | s <- newstarts ]
+
+
+
 {-mOrFinish :: Nfa Int -> Nfa Int -> (Nfa Int, (Set Int,Set Int))
 mOrFinish (NFA states1 moves1 start1 finish1) (NFA states2 moves2 start2 finish2)
   = (NFA (states1' `union` states2' `union` newstates)

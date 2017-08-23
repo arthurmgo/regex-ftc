@@ -15,6 +15,12 @@ data Move a = Move a Char a
 startstate :: Nfa a -> a
 startstate (NFA s mov start final) = start
 
+states :: Nfa a -> Set a
+states (NFA s mov start final) = s
+
+moves :: Nfa a -> Set (Move a)
+moves (NFA s mov start final) = mov
+
 finishstates :: Nfa a -> Set a
 finishstates (NFA s mov start final) = final
 
@@ -31,15 +37,25 @@ trans2 mach = transAux mach ""
     transAux mach str (y:ys) = (str,trans mach str) : transAux mach (str ++ [y]) ys
 
 
-lastMatch :: Ord a => String -> Nfa a -> Maybe (String,Set a)
-lastMatch str mach = lastM
+{-lastMatch :: Ord a =>  Nfa a -> String -> Maybe (String,Set a)
+lastMatch mach str  = lastM
     where
       fim      = finishstates mach
       matches  = trans2 mach str
       notEmpty = filter (not . isEmpty . inter fim . snd) matches
       lastM    = if null notEmpty
         then Nothing
-        else Just (last notEmpty)
+        else Just (last notEmpty)-}
+
+lastMatch :: Ord a =>  Nfa a -> String -> (String,Set a)
+lastMatch mach str  = lastM
+    where
+      fim      = finishstates mach
+      matches  = trans2 mach str
+      notEmpty = filter (not . isEmpty . inter fim . snd) matches
+      lastM    = if null notEmpty
+        then ("", empty)
+        else last notEmpty
 
 onetrans :: Ord a => Nfa a -> Char -> Set a -> Set a
 onetrans mach c x = closure mach (onemove mach c x)

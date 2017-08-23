@@ -10,6 +10,7 @@ module MenuIO
 import           Automata
 import           BuildNfa
 import           Data.Either
+import           Data.List
 import           Data.List.Split
 import           Data.Maybe
 import           Regex
@@ -105,6 +106,55 @@ convertTag (s,r) = (s, build r)
 convertTags :: [Tag] -> [TagNfa]
 convertTags = map convertTag
 
+makeNfa :: [TagNfa] ->  (Nfa Int, [(TagName, Set Int)])
+makeNfa tags = (fst f,mapfin)
+    where
+      f = mJoin (map snd tags)
+      mapfin = zip (map fst tags) (snd f)
+
+
+{-
+apply :: Nfa Int -> String -> Either [Set Int] String
+apply x y = if foldl' (==) True (map isNothing resp)
+    then Right "[ERROR] Nao foi possivel avaliar toda string"
+    else Left (map fromJust resp)
+      where
+        resp = f x y
+        f nfa []  =  []
+        f nfa str = if padrao == ""
+          then [Nothing]
+          else Just estado : f nfa nextstr
+          where
+            (padrao, estado) = lastMatch nfa str
+            nextstr = nextString padrao str -}
+
+f :: Nfa Int -> String ->  [Maybe (Set Int)]
+f nfa []  =  []
+f nfa str = if padrao == ""
+    then [Nothing]
+    else Just (inter fim estado) : f nfa nextstr
+    where
+      (padrao, estado) = lastMatch nfa str
+      nextstr = nextString padrao str
+      fim = finishstates nfa
+
+
+
+{-
+func :: [Tag] -> String -> [TagName]
+func tags str@(x:xs) = ["a"]
+    where
+          (nfa, fim)   = makeNfa $ convertTags tags
+          finish  = finishstates nfa
+          apply   = lastMatch nfa str
+          list = if isNothing apply
+            then Nothing
+            else fromJust apply
+          name    = fst $ fromJust list
+          patt    = snd $ fromJust list
+          nextstr = nextString patt str-}
+
+{-
 findMax :: [Maybe (TagName, String)] -> Maybe (TagName, String)
 findMax tag = maxTag (head tag) (tail tag)
     where
@@ -124,19 +174,6 @@ apply str (name,mach)  = if isNothing resp
 applyList :: String -> [TagNfa] ->  Maybe (TagName, String)
 applyList str  = findMax . map (apply str)
 
-func :: [TagNfa] -> String -> Maybe [TagName]
-func tags str@(x:xs)
-    | isNothing list           = Nothing
-    | isNothing (next nextstr) = Nothing
-    | otherwise                = Just (name : fromJust (next nextstr))
-    where next [] = Just []
-          next s  = func tags s
-          list    = applyList str tags
-          name    = fst $ fromJust list
-          patt    = snd $ fromJust list
-          nextstr = if null patt
-            then [x]
-            else nextString patt str
 
 mOrTag :: TagNfa -> TagNfa -> (Nfa Int,[(TagName, Set Int)])
 mOrTag t1 t2 = (machor, (name1, finishstates mach1):[(name2,finishstates mach2)])
@@ -146,3 +183,4 @@ mOrTag t1 t2 = (machor, (name1, finishstates mach1):[(name2,finishstates mach2)]
       mach1  = snd t1
       mach2  = snd t2
       machor = mOr mach1 mach2
+-}
