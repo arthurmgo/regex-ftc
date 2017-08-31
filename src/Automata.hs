@@ -37,15 +37,6 @@ trans2 mach = transAux mach ""
     transAux mach str (y:ys) = (str,trans mach str) : transAux mach (str ++ [y]) ys
 
 
-{-lastMatch :: Ord a =>  Nfa a -> String -> Maybe (String,Set a)
-lastMatch mach str  = lastM
-    where
-      fim      = finishstates mach
-      matches  = trans2 mach str
-      notEmpty = filter (not . isEmpty . inter fim . snd) matches
-      lastM    = if null notEmpty
-        then Nothing
-        else Just (last notEmpty)-}
 
 lastMatch :: Ord a =>  Nfa a -> String -> (String,Set a)
 lastMatch mach str  = lastM
