@@ -2,12 +2,14 @@ module Automata where
 
 import           Sets
 
+-- Estrutura de um automato finito nao deterministico
 data Nfa a = NFA (Set a)
                  (Set (Move a))
                   a
                  (Set a)
             deriving (Eq, Show)
 
+--
 data Move a = Move a Char a
              |Emove a a
              deriving (Eq, Ord, Show)
